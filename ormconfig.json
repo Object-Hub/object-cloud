@@ -1,0 +1,24 @@
+{
+    "type": "mongodb",
+    "host": "---",
+    "port": 5432,
+    "username": "---",
+    "password": "---",
+    "database": "---",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+       "src/models/**/*.ts"
+    ],
+    "migrations": [
+       "src/database/migrations/*.ts"
+    ],
+    "subscribers": [
+       "src/subscriber/**/*.ts"
+    ],
+    "cli": {
+       "entitiesDir": "src/models",
+       "migrationsDir": "src/database/migrations",
+       "subscribersDir": "src/subscriber"
+    }
+ }
