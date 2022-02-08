@@ -1,0 +1,9 @@
+{
+  "name": "control-panel",
+  "version": "1.0.0",
+  "description": "A Simple Panel.",
+  "main": "src/index.ts",
+  "repository": "https://github.com/Allchymist/control-panel.git",
+  "author": "Pedro Henrique <77502759+Allchymist@users.noreply.github.com>",
+  "license": "MIT"
+}
