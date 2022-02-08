@@ -12,8 +12,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "air"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "no-unused-vars": "off"
