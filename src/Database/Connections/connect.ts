@@ -1,5 +1,5 @@
 import { createConnection } from 'typeorm';
 
-createConnection().then(async (connection) => {
+createConnection().then(async () => {
   console.log('Connected to database');
 });
