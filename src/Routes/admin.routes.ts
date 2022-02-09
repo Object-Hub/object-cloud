@@ -1,12 +1,8 @@
-import { Router, Response, Request } from 'express';
+import { Router } from 'express';
 
 const adminsRoutes = Router();
 
-adminsRoutes.get('/settings', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello from adminsRoutes',
-  });
-}); // Settings
+adminsRoutes.get('/settings'); // Settings
 
 adminsRoutes.get('/api'); // API ADMIN
 adminsRoutes.get('/api/new'); // API ADMIN Create
@@ -26,7 +22,6 @@ adminsRoutes.get('/servers/:id/settings'); // Settings Especific Server
 adminsRoutes.get('/servers/:id/manager'); // Manager/Delete/Transfer Especific Server
 
 adminsRoutes.get('/users'); // View All Users
-adminsRoutes.get('/users/new'); // Create Users
 adminsRoutes.get('/users/:id'); // View and Settings Especific User
 
 export default adminsRoutes;
