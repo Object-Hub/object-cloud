@@ -4,7 +4,8 @@
         "node": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "airbnb-typescript/base"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -16,7 +17,11 @@
         "prettier"
     ],
     "rules": {
-        "no-console": "off",
-        "no-unused-vars": "off"
-    }
+        // "no-console": "off",
+        // "no-unused-vars": "off",
+        // "arrow-body-style": "off",
+        // "eol-last": "off",
+        // "semi": "off",
+        // "import/no-unresolved": "off"   
+    }   
 }
