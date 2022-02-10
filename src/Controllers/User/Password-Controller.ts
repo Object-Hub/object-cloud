@@ -4,7 +4,6 @@ import { users } from './Auth-controller';
 
 class PasswordController {
   async changePassword(req: Request, res: Response) {
-    // eslint-disable-next-line prettier/prettier
     const { oldPassword, newPassword, confirmPassword }: IPasswordRequest = req.body;
 
     if (users.find((user) => user.password !== oldPassword))

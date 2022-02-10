@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/Server/index';
-import { v4 as Uuidv4, validate } from 'uuid';
+import { validate } from 'uuid';
 
 // Post /account/register or /account/login
 
