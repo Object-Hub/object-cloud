@@ -19,19 +19,21 @@ class AuthController {
         error: 'Já existe um usuário com este email.',
       });
 
-    const NewUser: IUserRequest = {
-      id: Uuidv4(),
+    users.push({
       name,
       email,
       password,
+      id: Uuidv4(),
       createdAt: new Date().toLocaleDateString('pt-BR'),
-    };
-
-    users.push(NewUser);
+    });
 
     return res.status(201).json({
       message: 'Usuário cadastrado com sucesso.',
-      user: NewUser,
+      name,
+      email,
+      password,
+      id: Uuidv4(),
+      createdAt: new Date().toLocaleDateString('pt-BR'),
     });
   }
 

@@ -1,4 +1,4 @@
-interface IUserRequest {
+export default interface IUserRequest {
   id: string;
   name: string;
   email: string;
@@ -6,5 +6,3 @@ interface IUserRequest {
   createdAt: string;
   updatedAt?: string;
 }
-
-export = IUserRequest;
