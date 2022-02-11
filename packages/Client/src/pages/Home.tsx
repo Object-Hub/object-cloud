@@ -1,11 +1,8 @@
 export function Home() {
     return (
-        <div>
-            <h1>Home</h1>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatum, quisquam.
-            </p>
+			<div>
+						<h1> Control Panel </h1>
+						<h2> Welcome to the Control Panel </h2>
         </div>
     );
 }

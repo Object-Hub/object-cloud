@@ -1,17 +1,17 @@
 export function LoginForm(){
-    return (
+	return (
 		<div>
 			<form>
 				<label>
-					Username:
+					Usuário:
 					<input type="text" name="username" />
 				</label>
 				<br />
 				<label>
-					Password:
+					Senha:
 					<input type="password" name="password" />
 				</label>
 			</form>
 		</div>
-    )
+	)
 }
