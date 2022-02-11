@@ -6,6 +6,11 @@ export function LoginForm(){
 					Username:
 					<input type="text" name="username" />
 				</label>
+				<br />
+				<label>
+					Password:
+					<input type="password" name="password" />
+				</label>
 			</form>
 		</div>
     )

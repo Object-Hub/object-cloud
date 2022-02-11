@@ -1,14 +1,15 @@
 import react from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from '../components/home/home';
-import { LoginForm } from '../components/LoginForm/LoginForm';
 
-export default function Routes() {
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
+
+export default function AppRoutes() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<LoginForm />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
     )
