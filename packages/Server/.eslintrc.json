@@ -23,7 +23,8 @@
         "prettier/prettier": [
             "error",
             {
-                "printWidth": 120
+                "printWidth": 120,
+								"tabWidth": 2
             }
         ],
         "@typescript-eslint/no-empty-function": "off" 

@@ -1,5 +1,5 @@
 export default interface IPasswordRequest {
-  oldPassword?: string;
-  newPassword: string;
-  confirmPassword: string;
+	oldPassword?: string;
+	newPassword: string;
+	confirmPassword: string;
 }

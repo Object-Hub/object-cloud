@@ -6,61 +6,61 @@ import { v4 as Uuidv4 } from 'uuid';
 export const users: IUserRequest[] = [];
 
 class AuthController {
-  async register(req: Request, res: Response) {
-    const { name, email, password }: IUserRequest = req.body;
+	async register(req: Request, res: Response) {
+		const { name, email, password }: IUserRequest = req.body;
 
-    if (!name || !email || !password)
-      return res.status(400).json({
-        error: 'É necessário informar todos os dados para se cadastrar.',
-      });
+		if (!name || !email || !password)
+			return res.status(400).json({
+				error: 'É necessário informar todos os dados para se cadastrar.',
+			});
 
-    if (users.find((user) => user.email == email))
-      return res.status(400).json({
-        error: 'Já existe um usuário com este email.',
-      });
+		if (users.find((user) => user.email == email))
+			return res.status(400).json({
+				error: 'Já existe um usuário com este email.',
+			});
 
-    users.push({
-      name,
-      email,
-      password,
-      id: Uuidv4(),
-      createdAt: new Date().toLocaleDateString('pt-BR'),
-    });
+		users.push({
+			name,
+			email,
+			password,
+			id: Uuidv4(),
+			createdAt: new Date().toLocaleDateString('pt-BR'),
+		});
 
-    return res.status(201).json({
-      message: 'Usuário cadastrado com sucesso.',
-      name,
-      email,
-      password,
-      id: Uuidv4(),
-      createdAt: new Date().toLocaleDateString('pt-BR'),
-    });
-  }
+		return res.status(201).json({
+			message: 'Usuário cadastrado com sucesso.',
+			name,
+			email,
+			password,
+			id: Uuidv4(),
+			createdAt: new Date().toLocaleDateString('pt-BR'),
+		});
+	}
 
-  async login(req: Request, res: Response) {
-    const { email, password }: IUserRequest = req.body;
+	async login(req: Request, res: Response) {
+		const { email, password }: IUserRequest = req.body;
 
-    if (!email || !password)
-      return res.status(400).json({
-        error: 'É necessário informar todos os dados para se logar.',
-      });
+		if (!email || !password)
+			return res.status(400).json({
+				error: 'É necessário informar todos os dados para se logar.',
+			});
 
-    const fetchUser = users.find((user) => user.email === email);
+		const fetchUser = users.find((user) => user.email === email);
 
-    if (!fetchUser)
-      return res.status(400).json({
-        error: 'Usuário não encontrado.',
-      });
+		if (!fetchUser)
+			return res.status(400).json({
+				error: 'Usuário não encontrado.',
+			});
 
-    if (fetchUser.password !== password)
-      return res.status(400).json({
-        error: 'Senha incorreta.',
-      });
+		if (fetchUser.password !== password)
+			return res.status(400).json({
+				error: 'Senha incorreta.',
+			});
 
-    return res.json({
-      fetchUser,
-    });
-  }
+		return res.json({
+			fetchUser,
+		});
+	}
 }
 
 export const authController = new AuthController();
