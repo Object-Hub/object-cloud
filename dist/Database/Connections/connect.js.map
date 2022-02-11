@@ -1,1 +1,0 @@
-{"version":3,"file":"connect.js","sourceRoot":"","sources":["../../../src/Database/Connections/connect.ts"],"names":[],"mappings":";;AAAA,qCAA2C;AAE3C,IAAA,0BAAgB,GAAE,CAAC,IAAI,CAAC,KAAK,EAAE,UAAU,EAAE,EAAE;IAC3C,OAAO,CAAC,GAAG,CAAC,uBAAuB,CAAC,CAAC;AACvC,CAAC,CAAC,CAAC"}
