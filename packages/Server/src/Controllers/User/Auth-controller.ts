@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import IUserRequest from '../../interfaces/User';
 import { v4 as Uuidv4 } from 'uuid';
+//import { users } from '@src/Database/cache/User-Cache';
 
 // criar array de usuários para teste de autenticação e autorização do sistema
 export const users: IUserRequest[] = [];

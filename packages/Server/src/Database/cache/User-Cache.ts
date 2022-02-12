@@ -1,24 +1,39 @@
 import { model, Model } from 'mongoose';
 import { IUser, userSchema } from '../Models/UsersPanel';
 
-type TeditUser = 'name' | 'email' | 'password' | 'panels';
+type TeditUser = 'email' | 'password';
+const UserCache: Array<IUser> = [];
 
 class User {
   db: Model<IUser>;
-  cache: Promise<Array<IUser>>;
+  cache: Array<IUser>;
 
   constructor() {
-    this.db = model('users', userSchema);
-    this.cache = this.fetchAllUsers();
+    this.db = this.setSchema();
+    this.cache = UserCache;
   }
 
-  private async fetchAllUsers() {
+  setSchema() {
+    return model('users', userSchema);
+  }
+
+  async fetchAllUsers() {
     const fetchAllUsers = await this.db.find();
-    return fetchAllUsers;
+    const CacheLength = this.cache.length;
+    const CacheTime: number =
+      CacheLength < 50 ? 900000 : CacheLength > 50 && CacheLength < 250 ? Number('1,8e+6') : Number('3,6e+6');
+
+    setInterval(() => {
+      this.sendCachetoDb();
+    }, CacheTime);
+
+    return fetchAllUsers.map((user) => {
+      UserCache.push(user);
+    });
   }
 
-  async findById(id: string) {
-    const users = await this.cache;
+  findById(id: string) {
+    const users = this.cache;
     const found = users.find((item) => item._id === id);
 
     if (!found) return Error('Usuário não encontrado, verifique suas credenciais.');
@@ -26,8 +41,8 @@ class User {
     return found;
   }
 
-  async findByEmail(email: string) {
-    const users = await this.cache;
+  findByEmail(email: string) {
+    const users = this.cache;
     const found = users.find((item) => item.email === email);
 
     if (!found) return Error('Usuário não encontrado, verifique suas credenciais.');
@@ -35,20 +50,20 @@ class User {
     return found;
   }
 
-  async editUser(item: TeditUser, oldUser: string, newUser: string) {
-    const users = await this.cache;
-    const found = users.find((it) => it[item] === oldUser);
+  editUser(item: TeditUser, oldUser: string, newUser: string) {
+    const users = this.cache;
+    const found = users.find((user) => user[item] === oldUser);
 
     if (!found) return Error('Usuário não encontrado, verifique suas credenciais.');
 
-    let change = found[item];
-    change = newUser;
+    found[item] = newUser;
 
-    return true;
+    return users;
   }
 
-  async deleteUser(id: string) {
-    const users = await this.cache;
+  deleteUser(id: string) {
+    const users = this.cache;
+
     const found = users.find((item) => item?._id === id);
 
     if (!found) return Error('Usuário não encontrado, verifique suas credenciais.');
@@ -56,7 +71,13 @@ class User {
     const pos = users.indexOf(found);
     users.splice(pos, 1);
 
-    return true;
+    return users;
+  }
+
+  sendCachetoDb() {
+    this.cache.map((users) => {
+      new this.db({ users }).save();
+    });
   }
 }
 
