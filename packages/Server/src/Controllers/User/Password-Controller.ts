@@ -1,12 +1,12 @@
-import { Request, Response } from 'express';
+import { users } from '../../Database/cache/User-Cache';
 import IPasswordRequest from '../../interfaces/Auth';
-import { users } from './Auth-controller';
-
+import { Request, Response } from 'express';
 class PasswordController {
   async changePassword(req: Request, res: Response) {
     const { oldPassword, newPassword, confirmPassword }: IPasswordRequest = req.body;
+    const { cache } = users;
 
-    if (users.find((user) => user.password !== oldPassword))
+    if (cache.find((user) => user.password !== oldPassword))
       return res.status(400).json({
         error: 'Senha incorreta.',
       });
@@ -16,7 +16,7 @@ class PasswordController {
     });
   }
 
-  async forgotPassword(req: Request, res: Response) {
+  /*async forgotPassword(req: Request, res: Response) {
     const { newPassword, confirmPassword }: IPasswordRequest = req.body;
 
     if (users.find((user) => user.password === newPassword))
@@ -29,7 +29,7 @@ class PasswordController {
     });
   }
 
-  private async resetPassword() {}
+  private async resetPassword() {} */
 }
 
 export const passwordController = new PasswordController();

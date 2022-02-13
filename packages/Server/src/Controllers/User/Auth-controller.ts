@@ -1,66 +1,46 @@
+import { users } from '../../Database/cache/User-Cache';
+import { IUserRegister, IUserLogin } from '../../interfaces/User';
+import { authService } from '../../Services/User/Auth-services';
 import { Request, Response } from 'express';
-import IUserRequest from '../../interfaces/User';
-import { v4 as Uuidv4 } from 'uuid';
-//import { users } from '@src/Database/cache/User-Cache';
-
-// criar array de usuários para teste de autenticação e autorização do sistema
-export const users: IUserRequest[] = [];
 
 class AuthController {
-  async register(req: Request, res: Response) {
-    const { name, email, password }: IUserRequest = req.body;
+  register(req: Request, res: Response) {
+    const { name, username, email, password, panels }: IUserRegister = req.body;
 
-    if (!name || !email || !password)
+    if (!name || !username || !email || !password) {
       return res.status(400).json({
-        error: 'É necessário informar todos os dados para se cadastrar.',
+        error: 'É necessário informar todos os dados para se registrar.',
       });
+    }
 
-    if (users.find((user) => user.email == email))
+    try {
+      const data = authService.register({ name, username, email, password, panels });
+      return res.status(201).json(data);
+    } catch (error) {
+      const { message } = error as Error;
       return res.status(400).json({
-        error: 'Já existe um usuário com este email.',
+        error: message,
       });
-
-    users.push({
-      name,
-      email,
-      password,
-      id: Uuidv4(),
-      createdAt: new Date().toLocaleDateString('pt-BR'),
-    });
-
-    return res.status(201).json({
-      message: 'Usuário cadastrado com sucesso.',
-      name,
-      email,
-      password,
-      id: Uuidv4(),
-      createdAt: new Date().toLocaleDateString('pt-BR'),
-    });
+    }
   }
 
-  async login(req: Request, res: Response) {
-    const { email, password }: IUserRequest = req.body;
+  login(req: Request, res: Response) {
+    const { username, email, password }: IUserLogin = req.body;
 
-    if (!email || !password)
+    if ((!username || !email) && !password)
       return res.status(400).json({
         error: 'É necessário informar todos os dados para se logar.',
       });
 
-    const fetchUser = users.find((user) => user.email === email);
-
-    if (!fetchUser)
+    try {
+      const data = authService.login({ username, email, password });
+      return res.status(200).json(data);
+    } catch (error) {
+      const { message } = error as Error;
       return res.status(400).json({
-        error: 'Usuário não encontrado.',
+        error: message,
       });
-
-    if (fetchUser.password !== password)
-      return res.status(400).json({
-        error: 'Senha incorreta.',
-      });
-
-    return res.json({
-      fetchUser,
-    });
+    }
   }
 }
 

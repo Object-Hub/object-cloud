@@ -16,7 +16,5 @@ export default async function MongoConnect() {
   }
 
   await users.setSchema();
-  await users.fetchAllUsers();
-
-  return users.editUser('email', 'pedro@gmail.com', 'pedroh@gmail');
+  return await users.fetchAllUsers();
 }

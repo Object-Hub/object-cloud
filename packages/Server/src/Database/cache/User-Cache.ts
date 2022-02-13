@@ -1,9 +1,8 @@
-import { model, Model } from 'mongoose';
+import { model, Model, Query } from 'mongoose';
 import { IUser, userSchema } from '../Models/UsersPanel';
 
 type TeditUser = 'email' | 'password';
 const UserCache: Array<IUser> = [];
-
 class User {
   db: Model<IUser>;
   cache: Array<IUser>;
@@ -21,7 +20,7 @@ class User {
     const fetchAllUsers = await this.db.find();
     const CacheLength = this.cache.length;
     const CacheTime: number =
-      CacheLength < 50 ? 900000 : CacheLength > 50 && CacheLength < 250 ? Number('1,8e+6') : Number('3,6e+6');
+      CacheLength < 50 ? 900000 : CacheLength > 50 && CacheLength < 250 ? Number('1.8e+6') : Number('3.6e+6');
 
     setInterval(() => {
       this.sendCachetoDb();
@@ -75,9 +74,37 @@ class User {
   }
 
   sendCachetoDb() {
-    this.cache.map((users) => {
-      new this.db({ users }).save();
+    if (this.cache.length < 1) return;
+
+    this.cache.map(async (user) => {
+      const data = await this.db.findOne({ _id: user._id });
+
+      if (!data)
+        return new this.db({
+          _id: user._id,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          createdAt: user.createdAt,
+          panels: user.panels,
+        }).save();
+
+      return await this.db.updateOne(
+        { _id: user._id },
+        {
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          createdAt: user.createdAt,
+          panels: user.panels,
+        },
+        { upsert: true },
+      );
     });
+
+    return (this.cache = []);
   }
 }
 
