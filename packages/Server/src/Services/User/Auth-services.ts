@@ -2,10 +2,10 @@ import { users } from '../../Database/cache/User-Cache';
 import { IUserRegister, IUserLogin } from '../../interfaces/User';
 import { v4 as Uuidv4 } from 'uuid';
 
+const { cache } = users;
+
 class AuthService {
   register({ name, username, email, password, panels }: IUserRegister) {
-    const { cache } = users;
-
     if (cache.find((user) => user.username === username)) throw new Error('Já Existe um usuário com este Nick.');
     if (cache.find((user) => user.email === email)) throw new Error('Já existe um usuário com este email.');
 
@@ -34,7 +34,6 @@ class AuthService {
   }
 
   login({ username, email, password }: IUserLogin) {
-    const { cache } = users;
     const CheckUsernameOrEmail = cache.find((user) => user.email === email || user.username === username);
 
     if (!CheckUsernameOrEmail) throw new Error('Usuário ou Email inválidos.');
