@@ -1,4 +1,4 @@
-import { users } from '../../Database/cache/User-Cache';
+import { users } from '../../Database/Cache/User-Cache';
 import { IUserRegister, IUserLogin } from '../../interfaces/User';
 import { v4 as Uuidv4 } from 'uuid';
 

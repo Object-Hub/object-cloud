@@ -1,5 +1,5 @@
 import { connect } from 'mongoose';
-import { users } from '../cache/User-Cache';
+import { users } from '../Cache/User-Cache';
 import { config } from 'dotenv';
 config();
 
@@ -12,7 +12,7 @@ export default async function MongoConnect() {
   } catch (e) {
     const { message } = e as Error;
     console.error(`Ocorreu um erro ao conecta-se a DataBase:\n${message}`);
-    return process.exit();
+    return process.exit(1);
   }
 
   await users.setSchema();

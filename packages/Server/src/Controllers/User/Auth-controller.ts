@@ -1,6 +1,6 @@
-import { users } from '../../Database/cache/User-Cache';
+import { users } from '../../Database/Cache/User-Cache';
 import { IUserRegister, IUserLogin } from '../../interfaces/User';
-import { authService } from '../../Services/User/Auth-services';
+import { authService } from '../../Services/User/Auth-Services';
 import { Request, Response } from 'express';
 
 class AuthController {

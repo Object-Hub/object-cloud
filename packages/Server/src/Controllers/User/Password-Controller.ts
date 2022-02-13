@@ -1,4 +1,4 @@
-import { users } from '../../Database/cache/User-Cache';
+import { users } from '../../Database/Cache/User-Cache';
 import IPasswordRequest from '../../interfaces/Auth';
 import { Request, Response } from 'express';
 import { createTransport } from 'nodemailer';
