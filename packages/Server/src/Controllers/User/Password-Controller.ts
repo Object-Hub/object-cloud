@@ -1,10 +1,13 @@
 import { users } from '../../Database/cache/User-Cache';
 import IPasswordRequest from '../../interfaces/Auth';
 import { Request, Response } from 'express';
+import { createTransport } from 'nodemailer';
+
+const { cache } = users;
+
 class PasswordController {
   async changePassword(req: Request, res: Response) {
     const { oldPassword, newPassword, confirmPassword }: IPasswordRequest = req.body;
-    const { cache } = users;
 
     if (cache.find((user) => user.password !== oldPassword))
       return res.status(400).json({
@@ -16,20 +19,35 @@ class PasswordController {
     });
   }
 
-  /*async forgotPassword(req: Request, res: Response) {
-    const { newPassword, confirmPassword }: IPasswordRequest = req.body;
+  async forgotPassword(req: Request, res: Response) {
+    const { email } = req.body;
 
-    if (users.find((user) => user.password === newPassword))
-      return res.status(400).json({
-        error: 'A Senha atual não pode ser igual a antiga.',
-      });
+    if (!email) return res.status(400).json({ error: 'Email não informado.' });
+
+    const user = cache.find((user) => user.email === email);
+
+    if (!user) return res.status(400).json({ error: 'Usuário não encontrado com este e-mail.' });
+
+    const transporter = createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    const message = transporter.sendMail({
+      from: `"Control Panel" <controlpanel@gmail.com>`,
+      to: user.email,
+      subject: 'Recuperação de senha',
+      text: 'Sua senha é: 123456',
+    });
 
     return res.status(200).json({
-      message: 'Senha alterada com sucesso.',
+      message: 'E-mail encontrado.',
     });
   }
-
-  private async resetPassword() {} */
 }
 
 export const passwordController = new PasswordController();
