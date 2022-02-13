@@ -1,15 +1,29 @@
+import { useState } from 'react'
 import styles from './styles.module.scss'
 
 export function LoginForm(){
+
+  const [ user, setUser ] = useState('')
+  const [ password, setPassword ] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault()
+
+    if(!user || !password) {
+      return alert('Você não digitou usuário ou a senha para logar'); 
+    }
+  }
+
 	return (
 		<div className={styles.Container}>
-			<form className={styles.Form}>
+			<form onSubmit={handleSubmit} className={styles.Form}>
 				<label>
 					Usuário:
 					<input 
 						placeholder='Digite seu nome de usuário ou e-mail'
 						type="text" 
-						name="username" />
+						name="username"
+            onChange={e => setUser(e.target.value)} />
 				</label>
 				<br />
 				<label>
