@@ -23,7 +23,7 @@ export function RegisterForm(){
 			console.log(response)
 		}).catch(err => {
 			const { error } = err.response.data
-			console.log("Erro ao registrar: " + error)
+			alert(error)
 		})
 	}
 
@@ -36,16 +36,18 @@ export function RegisterForm(){
 						placeholder='Digite seu nome de usuário'
 						type="text" 
 						name="username"
-						value={name} />
+						value={name} 
+            onChange={e => setName(e.target.value)} />
 				</label>
 				<br />
         <label>
 					E-mail:
 					<input 
 						placeholder='Digite seu e-mail'
-						type="text" 
+						type="email" 
 						name="e-mail"
-						value={email} />
+						value={email} 
+            onChange={e => setEmail(e.target.value)}/>
 				</label>
 				<br />
 				<label>
@@ -54,7 +56,8 @@ export function RegisterForm(){
             placeholder='Digite sua nova senha'
             type="password" 
             name="password" 
-            value={password} />
+            value={password} 
+            onChange={e => setPassword(e.target.value)}/>
 				</label>
 
 				<button type="submit">Cadastrar</button>
