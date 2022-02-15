@@ -1,27 +1,19 @@
 import { IPasswordRequest, IForgotPassword } from '../../Interfaces/Auth';
-import { users } from '../../Database/Cache/User-Cache';
-import bcrypt from 'bcrypt';
+import { DataBase } from '@src/Database/Connections/Connect';
 import { createTransport } from 'nodemailer';
+import bcrypt from 'bcrypt';
 
-const { db, cache, findByEmail } = users;
+const { users } = DataBase;
 
 class PasswordService {
-  changePassword({ oldPassword, newPassword }: IPasswordRequest) {
-    const found = cache.find((user) => user.password === oldPassword);
+  async changePassword({ oldPassword, newPassword }: IPasswordRequest) {
+    // Pegar senha atual do usuário
 
-    if (!found) throw new Error('Usuário não encontrado, tente novamente.');
-    if (found.password !== oldPassword) throw new Error('Senha incorreta.');
-    if (found.password === newPassword) throw new Error('A senha atual não pode ser igual a antiga.');
-
-    found.password = newPassword;
-
-    return {
-      message: 'Senha alterada com sucesso.',
-    };
+    const CheckPassword = await users.findOne({ password: CheckPasswordHash });
   }
 
-  async forgotPassword({ email }: IForgotPassword) {
-    const found = findByEmail(email);
+  /*  async forgotPassword({ email }: IForgotPassword) {
+    const found = users.findByEmail(email);
 
     const transporter = createTransport({
       service: 'gmail',
@@ -48,7 +40,7 @@ class PasswordService {
       messageToEmail,
       password: bcrypt.hashSync(RandomPassword, 10),
     };
-  }
+  } */
 }
 
 export const passwordService = new PasswordService();

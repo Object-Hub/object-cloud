@@ -1,14 +1,19 @@
-import { users } from '../../Database/Cache/User-Cache';
+import { DataBase } from '@src/Database/Connections/Connect';
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { v4 as Uuidv4 } from 'uuid';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
-const { db, cache } = users;
+const { users } = DataBase;
 
 class AuthService {
-  register({ name, username, email, password }: IUserRegister) {
-    if (cache.find((user) => user.username === username)) throw new Error('Já Existe um usuário com este Nick.');
-    if (cache.find((user) => user.email === email)) throw new Error('Já existe um usuário com este email.');
+  async register({ name, username, email, password }: IUserRegister) {
+    const data = {
+      checkEmail: await users.findOne({ email }),
+      checkUsername: await users.findOne({ username }),
+    };
+
+    if (data.checkEmail) throw new Error('Já existe um usuário com este email.');
+    if (data.checkUsername) throw new Error('Já existe um usuário com este apelido.');
 
     const user = {
       _id: Uuidv4(),
@@ -19,9 +24,7 @@ class AuthService {
       createdAt: new Date().toLocaleDateString('pt-BR'),
     };
 
-    cache.push(user);
-
-    new db({
+    new users({
       _id: user._id,
       name: user.name,
       username: user.username,
@@ -36,11 +39,11 @@ class AuthService {
     };
   }
 
-  login({ username, email, password }: IUserLogin) {
-    const CheckUsernameOrEmail = cache.find((user) => user.email === email || user.username === username);
+  async login({ username, email, password }: IUserLogin) {
+    const CheckUsernameOrEmail = await users.findOne({ $or: [{ username }, { email }] });
     const CheckPassword = CheckUsernameOrEmail && bcrypt.compareSync(password, CheckUsernameOrEmail.password);
 
-    if (!CheckUsernameOrEmail) throw new Error('Usuário ou Email inválidos.');
+    if (!CheckUsernameOrEmail) throw new Error('Usuário ou Email inválido.');
     if (!CheckPassword) throw new Error('Senha inválida.');
 
     return {

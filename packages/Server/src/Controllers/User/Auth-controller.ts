@@ -1,4 +1,3 @@
-import { users } from '../../Database/Cache/User-Cache';
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { authService } from '../../Services/User/Auth-Services';
 import { Request, Response } from 'express';

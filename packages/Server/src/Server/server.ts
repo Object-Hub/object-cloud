@@ -1,8 +1,8 @@
-import MongoConnect from '../Database/Connections/Connect';
+import { DataBase } from '../Database/Connections/Connect';
 import routes from '../Routes/index';
 import express from 'express';
 
-MongoConnect();
+DataBase.Connect();
 
 const app = express();
 app.use(express.json());
