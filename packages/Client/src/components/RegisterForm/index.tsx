@@ -9,6 +9,7 @@ export function RegisterForm(){
   const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
 
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
@@ -16,6 +17,10 @@ export function RegisterForm(){
 
 		if(!name || !email || !password || !username) {
 			return alert('Preencha todos os campos obrigatórios.')
+		}
+
+		if(password !== confirmPassword) {
+			return alert('As senhas não conferem.')
 		}
 
 		await api.post('/account/register', {
@@ -72,6 +77,16 @@ export function RegisterForm(){
             name="password" 
             value={password} 
             onChange={e => setPassword(e.target.value)}/>
+				</label>
+				<br />
+				<label>
+          Confirme sua senha:
+          <input 
+            placeholder='Digite sua senha novamente'
+            type="password" 
+            name="confirmPassword" 
+            value={confirmPassword} 
+            onChange={e => setConfirmPassword(e.target.value)}/>
 				</label>
 
 				<button type="submit">Cadastrar</button>
