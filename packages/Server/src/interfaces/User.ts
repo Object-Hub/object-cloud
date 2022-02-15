@@ -13,7 +13,7 @@ export interface IUserRegister {
   name: string;
   email: string;
   password: string;
-  panels: string[];
+  panels?: string[];
 }
 
 export interface IUserLogin {
