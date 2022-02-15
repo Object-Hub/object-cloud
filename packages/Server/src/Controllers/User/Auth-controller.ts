@@ -1,11 +1,11 @@
 import { users } from '../../Database/Cache/User-Cache';
-import { IUserRegister, IUserLogin } from '../../interfaces/User';
+import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { authService } from '../../Services/User/Auth-Services';
 import { Request, Response } from 'express';
 
 class AuthController {
   register(req: Request, res: Response) {
-    const { name, username, email, password, panels }: IUserRegister = req.body;
+    const { name, username, email, password }: IUserRegister = req.body;
 
     if (!name || !username || !email || !password) {
       return res.status(400).json({
@@ -14,7 +14,7 @@ class AuthController {
     }
 
     try {
-      const data = authService.register({ name, username, email, password, panels });
+      const data = authService.register({ name, username, email, password });
       return res.status(201).json(data);
     } catch (error) {
       const { message } = error as Error;
