@@ -6,9 +6,10 @@ import { Request, Response } from 'express';
 class PasswordController {
   async changePassword(req: Request, res: Response) {
     const { oldPassword, newPassword }: IPasswordRequest = req.body;
+    const { username } = req.params;
 
     try {
-      const data = passwordService.changePassword({ oldPassword, newPassword });
+      const data = passwordService.changePassword({ username, oldPassword, newPassword });
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
@@ -27,8 +28,8 @@ class PasswordController {
       });
 
     try {
-      const data = await passwordService.forgotPassword({ email });
-      return res.status(200).json(data);
+      //const data = await passwordService.forgotPassword({ email });
+      return res.status(200).json({ message: 'temporario' });
     } catch (error) {
       const { message } = error as Error;
       return res.status(400).json({

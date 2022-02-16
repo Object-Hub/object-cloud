@@ -1,7 +1,8 @@
-import { DataBase } from '@src/Database/Connections/Connect';
+import { DataBase } from '../../Database/Connections/Connect';
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { v4 as Uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const { users } = DataBase;
 
@@ -46,9 +47,20 @@ class AuthService {
     if (!CheckUsernameOrEmail) throw new Error('Usuário ou Email inválido.');
     if (!CheckPassword) throw new Error('Senha inválida.');
 
+    const token = jwt.sign(
+      {
+        name: CheckUsernameOrEmail.name,
+        username: CheckUsernameOrEmail.username,
+        email: CheckUsernameOrEmail.email,
+      },
+      'secret',
+      { expiresIn: '1d' },
+    );
+
     return {
       message: 'Login efetuado.',
       user: CheckUsernameOrEmail,
+      token,
     };
   }
 }

@@ -3,7 +3,7 @@ import { authService } from '../../Services/User/Auth-Services';
 import { Request, Response } from 'express';
 
 class AuthController {
-  register(req: Request, res: Response) {
+  async register(req: Request, res: Response) {
     const { name, username, email, password }: IUserRegister = req.body;
 
     if (!name || !username || !email || !password) {
@@ -13,7 +13,7 @@ class AuthController {
     }
 
     try {
-      const data = authService.register({ name, username, email, password });
+      const data = await authService.register({ name, username, email, password });
       return res.status(201).json(data);
     } catch (error) {
       const { message } = error as Error;
@@ -23,7 +23,7 @@ class AuthController {
     }
   }
 
-  login(req: Request, res: Response) {
+  async login(req: Request, res: Response) {
     const { username, email, password }: IUserLogin = req.body;
 
     if ((!username || !email) && !password)
@@ -32,7 +32,7 @@ class AuthController {
       });
 
     try {
-      const data = authService.login({ username, email, password });
+      const data = await authService.login({ username, email, password });
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;

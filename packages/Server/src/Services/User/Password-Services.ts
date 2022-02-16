@@ -1,15 +1,17 @@
 import { IPasswordRequest, IForgotPassword } from '../../Interfaces/Auth';
-import { DataBase } from '@src/Database/Connections/Connect';
+import { DataBase } from '../../Database/Connections/Connect';
 import { createTransport } from 'nodemailer';
 import bcrypt from 'bcrypt';
 
 const { users } = DataBase;
 
 class PasswordService {
-  async changePassword({ oldPassword, newPassword }: IPasswordRequest) {
-    // Pegar senha atual do usuário
+  async changePassword({ username, oldPassword, newPassword }: IPasswordRequest) {
+    const data = await users.findOne({ username });
+    if (!data) throw Error('Usuário inválido.');
 
-    const CheckPassword = await users.findOne({ password: CheckPasswordHash });
+    const checkPasswordHash = bcrypt.compareSync(oldPassword, data.password);
+    if (!checkPasswordHash) throw Error('As senha não coincidem');
   }
 
   /*  async forgotPassword({ email }: IForgotPassword) {
