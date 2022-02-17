@@ -1,7 +1,7 @@
 import { authController } from '../Controllers/User/Auth-Controller';
 import { Router } from 'express';
 import { passwordController } from '../Controllers/User/Password-Controller';
-import { EnsureAuth } from '../middlewares/auth';
+import { EnsureAuth } from '../Middlewares/auth';
 
 const UserRoutes = Router();
 
