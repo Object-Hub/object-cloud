@@ -1,9 +1,7 @@
-import Routes from "./Routes/routes";
+import AppRoutes from "./Routes/routes";
 
 export function App() {
   return (
-    <div>
-        <Routes />
-    </div>
+      <AppRoutes />
   );
 }

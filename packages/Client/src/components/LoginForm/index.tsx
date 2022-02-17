@@ -21,6 +21,10 @@ export function LoginForm(){
 		password
 	}).then(response => {
 		console.log(response.data)
+    // localStorage.setItem('token', response.data.token)
+    // api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+    // return navigate('/')
+
 	}).catch(err => {
 		const { error } = err.response.data
 		alert(error)
