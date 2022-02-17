@@ -5,14 +5,11 @@ import { EnsureAuth } from '../middlewares/auth';
 
 const UserRoutes = Router();
 
-UserRoutes.get('/api', EnsureAuth, (req, res) => {
-  res.status(200).json({
-    message: 'teste',
-  });
-});
+UserRoutes.get('/api');
 
 UserRoutes.post('/login', authController.login);
 UserRoutes.post('/register', authController.register);
-UserRoutes.post('/:username/forgot-password', passwordController.forgotPassword);
+UserRoutes.post('/forgot-password/:token', passwordController.forgotPassword);
+UserRoutes.post('/forgot-password/', passwordController.forgotPassword);
 
 export default UserRoutes;
