@@ -1,48 +1,53 @@
-import { IPasswordRequest, IForgotPassword } from '../../Interfaces/Auth';
+import { IPasswordRequest, IForgotPassword, IForgotPasswordToken } from '../../Interfaces/Auth';
 import { DataBase } from '../../Database/Connections/Connect';
-import { createTransport } from 'nodemailer';
+import { sendEmail } from '@src/Utils/sendEmail';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 const { users } = DataBase;
-
 class PasswordService {
-  async changePassword({ username, oldPassword, newPassword }: IPasswordRequest) {
-    const data = await users.findOne({ username });
-    if (!data) throw Error('Usuário inválido.');
+  async changePassword({ username, email, oldPassword, newPassword }: IPasswordRequest) {
+    if (!oldPassword || !newPassword)
+      throw new Error('É necessário preencher todos os campos para atualizar sua senha.');
+
+    const oldPasswordHash = bcrypt.hashSync(oldPassword, 10);
+    const data = await users.findOne({ username, password: oldPasswordHash });
+    if (!data) throw new Error('Usuário inválido.');
 
     const checkPasswordHash = bcrypt.compareSync(oldPassword, data.password);
-    if (!checkPasswordHash) throw Error('As senha não coincidem');
+    if (!checkPasswordHash) throw new Error('As senha não coincidem');
+
+    const newPasswordHash = bcrypt.hashSync(newPassword, 10);
+
+    await users.updateOne({ _id: data._id }, { password: newPasswordHash });
+
+    return {
+      message: 'Senha alterada com sucesso',
+    };
   }
 
-  /*  async forgotPassword({ email }: IForgotPassword) {
-    const found = users.findByEmail(email);
+  async forgotPassword({ email }: IForgotPassword) {
+    const data = await users.findOne({ email });
+    if (!data) throw new Error('Usuário Inválido');
 
-    const transporter = createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'controlpanelbr@gmail.com',
-        pass: 'TesteNode1234',
+    const token = jwt.sign(
+      {
+        id: data._id,
+        email: data.email,
       },
-    });
+      'secret',
+      { expiresIn: '1m' },
+    );
 
-    const RandomPassword = Math.random().toString(36).slice(-8);
-    const NewPasswordHash = await bcrypt.hash(RandomPassword, 10);
-
-    await db.updateOne({ _id: found._id }, { password: NewPasswordHash });
-
-    const messageToEmail = await transporter.sendMail({
-      from: `"Control Panel Brasil" <controlpanelBR@gmail.com>`,
-      to: found.email,
-      subject: 'Recuperação de senha',
-      text: `Sua senha é: ${RandomPassword}`,
-    });
+    const dataEmail = await sendEmail({ email, token });
 
     return {
       message: 'Email enviado com sucesso.',
-      messageToEmail,
-      password: bcrypt.hashSync(RandomPassword, 10),
+      dataEmail,
     };
-  } */
+  }
+
+  // async forgotPasswordToken({ token }: IForgotPasswordToken) {}
 }
 
 export const passwordService = new PasswordService();

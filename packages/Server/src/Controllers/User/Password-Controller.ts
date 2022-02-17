@@ -1,7 +1,7 @@
 import { passwordService } from '../../Services/User/Password-Services';
-import { IPasswordRequest, IForgotPassword } from '../../Interfaces/Auth';
-import { createTransport } from 'nodemailer';
+import { IForgotPasswordToken, IPasswordRequest } from '../../Interfaces/Auth';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 class PasswordController {
   async changePassword(req: Request, res: Response) {
@@ -9,7 +9,7 @@ class PasswordController {
     const { username } = req.params;
 
     try {
-      const data = passwordService.changePassword({ username, oldPassword, newPassword });
+      const data = await passwordService.changePassword({ username, oldPassword, newPassword });
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
@@ -20,7 +20,7 @@ class PasswordController {
   }
 
   async forgotPassword(req: Request, res: Response) {
-    const { email }: IForgotPassword = req.body;
+    const { email } = req.body;
 
     if (!email)
       return res.status(400).json({
@@ -28,8 +28,8 @@ class PasswordController {
       });
 
     try {
-      //const data = await passwordService.forgotPassword({ email });
-      return res.status(200).json({ message: 'temporario' });
+      const data = await passwordService.forgotPassword({ email });
+      return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
       return res.status(400).json({
@@ -37,6 +37,26 @@ class PasswordController {
       });
     }
   }
+
+  // forgotPasswordToken(req: Request, res: Response) {
+  //   const { token } = req.params;
+  //   const CheckToken = jwt.verify(token, 'secret') as IForgotPasswordToken;
+
+  //   if (!CheckToken)
+  //     return res.status(400).json({
+  //       error: 'Link inválido ou expirado.',
+  //     });
+
+  //   try {
+  //     const data = passwordService.forgotPasswordToken({ token });
+  //     return res.status(200).json(data);
+  //   } catch (error) {
+  //     const { message } = error as Error;
+  //     return res.status(400).json({
+  //       error: message,
+  //     });
+  //   }
+  // }
 }
 
 export const passwordController = new PasswordController();

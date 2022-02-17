@@ -1,11 +1,15 @@
 export interface IPasswordRequest {
-  username: string;
-  oldPassword: string;
+  email?: string;
+  username?: string;
+  oldPassword?: string;
   newPassword: string;
-  confirmPassword?: string;
 }
 
 export interface IForgotPassword {
   email: string;
   newPassword?: string;
+}
+
+export interface IForgotPasswordToken {
+  token: string;
 }
