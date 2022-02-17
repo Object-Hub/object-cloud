@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { DashBoard } from '../pages/private/dashboard';
 
-import { Home } from '../pages/Home';
-import { Login } from '../pages/Login';
-import { Register } from '../pages/Register';
-import { ForgotPassword } from '../pages/Password';
+import { Home } from '../pages/public/Home';
+import { Login } from '../pages/public/Login';
+import { Register } from '../pages/public/Register';
 
 export default function AppRoutes() {
     return (
@@ -12,7 +12,7 @@ export default function AppRoutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/dashboard" element={<DashBoard />} />
             </Routes>
         </Router>
     )
