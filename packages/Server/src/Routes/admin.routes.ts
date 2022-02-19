@@ -4,9 +4,7 @@ const adminsRoutes = Router();
 
 adminsRoutes.get('/settings'); // Settings
 
-adminsRoutes.get('/api'); // API ADMIN
 adminsRoutes.get('/databases'); // Database
-adminsRoutes.post('/api/new'); // API ADMIN Create
 
 adminsRoutes.get('/nodes'); // View VPS Online
 adminsRoutes.post('/nodes/new'); // Create VPS
