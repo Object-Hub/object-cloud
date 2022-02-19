@@ -1,21 +1,25 @@
-import { IPasswordRequest, IForgotPassword, IForgotPasswordToken } from '../../Interfaces/Auth';
-import { DataBase } from '../../Database/Connections/Connect';
-import { sendEmail } from '@src/Utils/sendEmail';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import ms from 'ms';
 
-const { users } = DataBase;
+import { sendEmailForgotPassword } from '../../Utils/Email/Sendings/ForgotPassword-Email';
+import { IPasswordRequest, IForgotPassword, IUserToken } from '../../Interfaces/Auth';
+import { DataBase } from '../../Database/Connections/Connect';
+
+const { users, tokens } = DataBase;
+
 class PasswordService {
-  async changePassword({ username, email, oldPassword, newPassword }: IPasswordRequest) {
-    if (!oldPassword || !newPassword)
-      throw new Error('É necessário preencher todos os campos para atualizar sua senha.');
+  async changePassword({ username, oldPassword, newPassword }: IPasswordRequest) {
+    if (!oldPassword || !newPassword) throw new Error('É necessário preencher todos os campos para atualizar sua senha.');
 
-    const oldPasswordHash = bcrypt.hashSync(oldPassword, 10);
-    const data = await users.findOne({ username, password: oldPasswordHash });
-    if (!data) throw new Error('Usuário inválido.');
+    const data = await users.findOne({ username });
+
+    if (!data) throw new Error('Usuário não existe.');
 
     const checkPasswordHash = bcrypt.compareSync(oldPassword, data.password);
-    if (!checkPasswordHash) throw new Error('As senha não coincidem');
+
+    if (!checkPasswordHash) throw new Error('A senha atual está incorreta.');
+    if (oldPassword === newPassword) throw new Error('A nova senha não pode ser igual a senha atual.');
 
     const newPasswordHash = bcrypt.hashSync(newPassword, 10);
 
@@ -27,8 +31,8 @@ class PasswordService {
   }
 
   async forgotPassword({ email }: IForgotPassword) {
-    const data = await users.findOne({ email });
-    if (!data) throw new Error('Usuário Inválido');
+    const data = await users.findOne({ email, verifyEmail: true });
+    if (!data) throw new Error('Usuário inválido ou email não verificado.');
 
     const token = jwt.sign(
       {
@@ -36,10 +40,18 @@ class PasswordService {
         email: data.email,
       },
       'secret',
-      { expiresIn: '1m' },
+      { expiresIn: '15m' },
     );
 
-    const dataEmail = await sendEmail({ email, token });
+    const expireToken = ms('15m') + Date.now();
+    const dataEmail = await sendEmailForgotPassword({
+      id: data._id,
+      name: data.name,
+      email: data.email,
+      token,
+    });
+
+    await tokens.updateOne({ _id: data._id }, { token, expireAt: expireToken }, { upsert: true });
 
     return {
       message: 'Email enviado com sucesso.',
@@ -47,7 +59,22 @@ class PasswordService {
     };
   }
 
-  // async forgotPasswordToken({ token }: IForgotPasswordToken) {}
+  async forgotPasswordToken({ id, token, newPassword }: IUserToken) {
+    const user = await users.findOne({ _id: id });
+    const data = await tokens.findOne({ _id: id, token });
+
+    if (!user) throw new Error('Usuário inválido.');
+    if (!data) throw new Error('Token inválido.');
+
+    const newPasswordHash = bcrypt.hashSync(newPassword, 10);
+
+    await users.updateOne({ _id: user._id }, { password: newPasswordHash });
+    await tokens.updateOne({ _id: user._id }, { token: null, expireAt: null });
+
+    return {
+      message: `Senha alterada com sucesso.\nRedirecionando você para pagina de Login.`,
+    };
+  }
 }
 
 export const passwordService = new PasswordService();

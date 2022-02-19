@@ -1,5 +1,5 @@
 import { passwordService } from '../../Services/User/Password-Services';
-import { IForgotPasswordToken, IPasswordRequest } from '../../Interfaces/Auth';
+import { IPasswordRequest } from '../../Interfaces/Auth';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
@@ -38,25 +38,30 @@ class PasswordController {
     }
   }
 
-  // forgotPasswordToken(req: Request, res: Response) {
-  //   const { token } = req.params;
-  //   const CheckToken = jwt.verify(token, 'secret') as IForgotPasswordToken;
+  async forgotPasswordToken(req: Request, res: Response) {
+    const { id, token } = req.params;
+    const { newPassword } = req.body;
 
-  //   if (!CheckToken)
-  //     return res.status(400).json({
-  //       error: 'Link inválido ou expirado.',
-  //     });
+    if (!id || !token) return res.status(404);
 
-  //   try {
-  //     const data = passwordService.forgotPasswordToken({ token });
-  //     return res.status(200).json(data);
-  //   } catch (error) {
-  //     const { message } = error as Error;
-  //     return res.status(400).json({
-  //       error: message,
-  //     });
-  //   }
-  // }
+    if (!newPassword)
+      return res.status(400).json({
+        error: 'É necessário uma nova senha para efeutar a alteração.',
+      });
+
+    try {
+      const verifyToken = jwt.verify(token, 'secret');
+      if (!verifyToken) return res.status(404);
+
+      const data = await passwordService.forgotPasswordToken({ id, token, newPassword });
+      return res.status(200).json(data);
+    } catch (error) {
+      const { message } = error as Error;
+      return res.status(400).json({
+        error: message,
+      });
+    }
+  }
 }
 
 export const passwordController = new PasswordController();
