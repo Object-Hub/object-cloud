@@ -16,6 +16,8 @@ export interface IUser {
   panels?: Array<string>;
   createdAt: string;
   updatedAt?: string;
+  verifyEmail: boolean;
+  admin: boolean;
 }
 
 export const userSchema = new Schema<IUser>({
@@ -25,6 +27,8 @@ export const userSchema = new Schema<IUser>({
   email: { type: String, required: true },
   password: { type: String, required: true },
   createdAt: { type: String, required: true },
+  verifyEmail: { type: Boolean, default: false },
+  admin: { type: Boolean, default: false },
   panels: Array,
   UserDiscord: {
     id: Number,
