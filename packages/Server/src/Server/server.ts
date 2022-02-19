@@ -8,6 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
-app.listen(5555, () => console.log('Server is running on port 5555'));
+app.listen(5555, () => console.log('[SYSTEM]: Painel Iniciado na porta: 5555'));
 
 export { app };

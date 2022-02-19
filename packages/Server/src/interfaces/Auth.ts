@@ -10,6 +10,8 @@ export interface IForgotPassword {
   newPassword?: string;
 }
 
-export interface IForgotPasswordToken {
+export interface IUserToken {
+  id: string;
   token: string;
+  newPassword: string;
 }
