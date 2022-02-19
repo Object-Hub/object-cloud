@@ -20,14 +20,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "paths": {
-      "@src/*": [
-        "./src/*"
-      ],
-      "@test/*": [
-        "./test/*"
-      ]
-    },
     "rootDirs": [
       "./src",
       "./test"
@@ -36,8 +28,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "./src/**/*.ts",
-    "./test/**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": []
-}  
+}
