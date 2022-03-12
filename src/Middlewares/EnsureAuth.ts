@@ -1,30 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 
 interface IPayload {
   sub: string;
 }
 
-export function EnsureAuth(req: Request, res: Response, next: NextFunction) {
-  const token = req.headers.authorization;
+export default function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
+  const authToken = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).send({
-      message: 'Não autorizado.',
+  if (!authToken) {
+    return res.status(401).json({
+      errorCode: 'token.invalid',
     });
   }
 
-  const splitToken = token.split(' ')[1];
+  const [, token] = authToken.split(' ');
 
   try {
-    const { sub } = jwt.verify(splitToken, process.env.SECRET_KEY || 'secret') as IPayload;
-
+    const { sub } = verify(token, 'secret') as IPayload;
     req.userID = sub;
 
     return next();
-  } catch (error) {
-    return res.status(401).json({
-      error: 'Token inválido.',
-    });
+  } catch (err) {
+    return res.status(401).json({ errorCode: 'token.expired' });
   }
 }

@@ -42,7 +42,7 @@ class AuthController {
     }
   }
 
-  async profile(req: Request, res: Response) {
+  /*async profile(req: Request, res: Response) {
     const { userID } = req;
 
     try {
@@ -54,7 +54,7 @@ class AuthController {
         error: message,
       });
     }
-  }
+  }*/
 }
 
 export const authController = new AuthController();
