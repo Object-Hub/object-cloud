@@ -1,5 +1,5 @@
-import { DataBase } from '../Database/Connections/Connect';
-import routes from '../Routes/index';
+import { DataBase } from './Database/Connections/Connect';
+import routes from './Routes/index';
 import express from 'express';
 
 DataBase.Connect();

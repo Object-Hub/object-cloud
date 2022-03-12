@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 interface IPayload {
@@ -19,7 +19,7 @@ export function EnsureAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const { sub } = jwt.verify(splitToken, process.env.SECRET_KEY || 'secret') as IPayload;
 
-    req.userId = sub;
+    req.userID = sub;
 
     return next();
   } catch (error) {

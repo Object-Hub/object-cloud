@@ -43,10 +43,10 @@ class AuthController {
   }
 
   async profile(req: Request, res: Response) {
-    const { userId } = req;
+    const { userID } = req;
 
     try {
-      const data = await authService.profile(userId);
+      const data = await authService.profile(userID);
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
