@@ -1,34 +1,30 @@
-import { useState } from 'react'
-import api from '../../services/api'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/Auth/AuthContext'
 import styles from './styles.module.scss'
 
 export function LoginForm(){
 
-  const [ user, setUser ] = useState('')
+  const [ Login, setLogin ] = useState('')
   const [ password, setPassword ] = useState('')
+  const { signIn } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault()
 
-    if(!user || !password) {
+    if(!Login || !password) {
       return alert('Você não digitou usuário ou a senha para logar'); 
     }
 
-	const EmailOrUsername = user.includes('@') ? 'email' : 'username'
-
-	await api.post('/account/login', {
-		[EmailOrUsername]: user,
-		password
-	}).then(response => {
-		console.log(response.data)
-    // localStorage.setItem('token', response.data.token)
-    // api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-    // return navigate('/')
-
-	}).catch(err => {
-		const { error } = err.response.data
-		alert(error)
-	})
+    try {
+      const response = await signIn(Login, password)
+      console.log(response)
+      navigate('/')
+    } catch (error) {
+      const { message } = error as { message: string }
+      console.log(message)
+    }  
   }
 
 	return (
@@ -40,7 +36,7 @@ export function LoginForm(){
 					placeholder='Digite seu nome de usuário ou e-mail'
 					type="text" 
 					name="username"
-					onChange={e => setUser(e.target.value)} />
+					onChange={e => setLogin(e.target.value)} />
 			</label>
 			<br />
 			<label>
