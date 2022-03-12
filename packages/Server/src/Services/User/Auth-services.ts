@@ -108,6 +108,17 @@ class AuthService {
       token,
     };
   }
+
+  async profile(userId: string) {
+    const user = await users.findOne({ _id: userId });
+
+    if (!user) throw new Error('Usuário não encontrado.');
+
+    return {
+      message: 'Perfil encontrado.',
+      user,
+    };
+  }
 }
 
 export const authService = new AuthService();

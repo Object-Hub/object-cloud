@@ -14,6 +14,8 @@ class EmailService {
       message: 'Email verificado com sucesso.',
     };
   }
+
+  async changeEmail() {}
 }
 
 export const emailService = new EmailService();

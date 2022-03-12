@@ -41,6 +41,20 @@ class AuthController {
       });
     }
   }
+
+  async profile(req: Request, res: Response) {
+    const { userId } = req;
+
+    try {
+      const data = await authService.profile(userId);
+      return res.status(200).json(data);
+    } catch (error) {
+      const { message } = error as Error;
+      return res.status(400).json({
+        error: message,
+      });
+    }
+  }
 }
 
 export const authController = new AuthController();

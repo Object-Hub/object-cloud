@@ -21,6 +21,8 @@ class EmailController {
       });
     }
   }
+
+  async changeEmail(req: Request, res: Response) {}
 }
 
 export const emailController = new EmailController();
