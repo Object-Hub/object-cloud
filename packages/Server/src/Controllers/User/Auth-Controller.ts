@@ -1,5 +1,5 @@
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
-import { authService } from '../../Services/User/Auth-Services';
+import { authService } from '../../Services/User/Auth-services';
 import { Request, Response } from 'express';
 
 class AuthController {

@@ -1,4 +1,4 @@
-import { emailService } from '../../Services/User/Email-Service';
+import { emailService } from '../../Services/User/Email-Services';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
