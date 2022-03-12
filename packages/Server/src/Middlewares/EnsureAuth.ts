@@ -19,7 +19,7 @@ export function EnsureAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const { sub } = jwt.verify(splitToken, process.env.SECRET_KEY || 'secret') as IPayload;
 
-    req.body.userId = sub;
+    req.userId = sub;
 
     return next();
   } catch (error) {
