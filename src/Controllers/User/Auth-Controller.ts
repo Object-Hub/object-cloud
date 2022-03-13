@@ -42,11 +42,11 @@ class AuthController {
     }
   }
 
-  /*async profile(req: Request, res: Response) {
-    const { userID } = req;
+  async profile(req: Request, res: Response) {
+    const { userIDMiddle } = req;
 
     try {
-      const data = await authService.profile(userID);
+      const data = await authService.profile(userIDMiddle);
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
@@ -54,7 +54,7 @@ class AuthController {
         error: message,
       });
     }
-  }*/
+  }
 }
 
 export const authController = new AuthController();

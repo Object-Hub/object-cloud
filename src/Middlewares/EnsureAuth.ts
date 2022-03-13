@@ -5,7 +5,8 @@ interface IPayload {
   sub: string;
 }
 
-export default function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
   const authToken = req.headers.authorization;
 
   if (!authToken) {
@@ -18,7 +19,7 @@ export default function ensureAuthenticated(req: Request, res: Response, next: N
 
   try {
     const { sub } = verify(token, 'secret') as IPayload;
-    req.userID = sub;
+    req.userIDMiddle = sub;
 
     return next();
   } catch (err) {

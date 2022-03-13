@@ -110,7 +110,7 @@ class AuthService {
   }
 
   async profile(userID: string) {
-    const user = await users.findOne({ _id: userId });
+    const user = await users.findOne({ _id: userID });
 
     if (!user) throw new Error('Usuário não encontrado.');
 
