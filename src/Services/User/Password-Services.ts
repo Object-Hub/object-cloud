@@ -4,7 +4,7 @@ import ms from 'ms';
 
 import { sendEmailForgotPassword } from '../../Utils/Email/Sendings/ForgotPassword-Email';
 import { IPasswordRequest, IForgotPassword, IUserToken } from '../../Interfaces/Auth';
-import { DataBase } from '../../Database/Connections/Connect';
+import { DataBase } from '../../Database';
 
 const { users, tokens } = DataBase;
 

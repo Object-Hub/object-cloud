@@ -1,7 +1,8 @@
-import { passwordService } from '../../Services/User/Password-Services';
-import { IPasswordRequest } from '../../Interfaces/Auth';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+
+import { passwordService } from '../../Services/User/Password-Services';
+import { IPasswordRequest } from '../../Interfaces/Auth';
 
 class PasswordController {
   async changePassword(req: Request, res: Response) {

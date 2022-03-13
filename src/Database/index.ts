@@ -1,10 +1,10 @@
-import { IUser, userSchema } from '../Models/UsersPanel';
-import CheckExpireToken from '../../Utils/Token/CheckExpireToken';
-import { tokenUser, ITokenUser } from '../Models/TokenUser';
 import { connect, Model, model } from 'mongoose';
-import { config } from 'dotenv';
 
-config();
+import { userSchema } from './Models/UsersPanel';
+import { tokenUser } from './Models/TokenUser';
+import { IUser } from './Interfaces/User';
+import { ITokenUser } from './Interfaces/Token';
+import CheckExpireToken from '../Utils/Token/CheckExpireToken';
 
 class Mongoose {
   readonly users: Model<IUser>;

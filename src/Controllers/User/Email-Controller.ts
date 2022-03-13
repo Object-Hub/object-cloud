@@ -1,6 +1,7 @@
-import { emailService } from '../../Services/User/Email-Services';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+
+import { emailService } from '../../Services/User/Email-Services';
 
 class EmailController {
   async confirmEmail(req: Request, res: Response) {

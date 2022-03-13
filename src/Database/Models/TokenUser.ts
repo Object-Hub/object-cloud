@@ -1,10 +1,5 @@
 import { Schema } from 'mongoose';
-
-export interface ITokenUser {
-  _id: string;
-  token: string;
-  expireAt: number;
-}
+import { ITokenUser } from '../Interfaces/Token';
 
 export const tokenUser = new Schema<ITokenUser>({
   _id: String,

@@ -1,4 +1,4 @@
-import { DataBase } from '../../Database/Connections/Connect';
+import { DataBase } from '../../Database';
 
 export default async function CheckExpireToken() {
   const { users, tokens } = DataBase;

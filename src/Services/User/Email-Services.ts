@@ -1,4 +1,4 @@
-import { DataBase } from '../../Database/Connections/Connect';
+import { DataBase } from '../../Database';
 
 const { tokens, users } = DataBase;
 

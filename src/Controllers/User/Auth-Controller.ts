@@ -1,6 +1,7 @@
+import { Request, Response } from 'express';
+
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { authService } from '../../Services/User/Auth-services';
-import { Request, Response } from 'express';
 
 class AuthController {
   async register(req: Request, res: Response) {

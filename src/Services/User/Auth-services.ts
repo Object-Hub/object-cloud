@@ -1,11 +1,11 @@
-import { sendConfirmEmail } from '../../Utils/Email/Sendings/ConfirmationEmail-Email';
-import { IUserRegister, IUserLogin } from '../../Interfaces/User';
-import { DataBase } from '../../Database/Connections/Connect';
-
 import { v4 as Uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import ms from 'ms';
+
+import { sendConfirmEmail } from '../../Utils/Email/Sendings/ConfirmationEmail-Email';
+import { IUserRegister, IUserLogin } from '../../Interfaces/User';
+import { DataBase } from '../../Database';
 
 const { users, tokens } = DataBase;
 
