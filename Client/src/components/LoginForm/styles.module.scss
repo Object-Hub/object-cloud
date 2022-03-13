@@ -1,0 +1,76 @@
+.Container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.Form {
+	width: 100%;
+	max-width: 350px;
+	padding: 20px;
+	border-radius: 5px;
+	color: rgb(20, 20, 20);
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+	> label {
+		display: block;
+		margin-bottom: 0.3rem;
+
+		> input {
+			margin-top: 0.3rem;
+			width: 100%;
+			padding: 0.5rem;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			border: 0;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+  > button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border: 0;
+    background-color: #00a8ff;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgb(31, 130, 206);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.Register {
+  margin-top: 1rem;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  > a {
+    color: #00a8ff;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
