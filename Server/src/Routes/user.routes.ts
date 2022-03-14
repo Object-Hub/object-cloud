@@ -16,6 +16,7 @@ UserRoutes.post('/change-password/:username', passwordController.changePassword)
 UserRoutes.post('/forgot-password/:id/:token', passwordController.forgotPasswordToken);
 
 UserRoutes.get('/confirm-email/:id/:token', emailController.confirmEmail);
-UserRoutes.post('/change-email', emailController.changeEmail);
+UserRoutes.post('/change-email/:username', emailController.changeEmail);
+UserRoutes.get('/change-email/:id/:token', emailController.changeEmailToken);
 
 export default UserRoutes;

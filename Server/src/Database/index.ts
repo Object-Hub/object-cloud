@@ -13,9 +13,11 @@ class Mongoose {
   constructor() {
     this.users = this.setUserSchema();
     this.tokens = this.setTokenSchema();
+
+    this.Connect();
   }
 
-  Connect() {
+  private Connect() {
     connect(`${process.env.MONGO_CONNECT}`)
       .then(async (db) => {
         await this.setUserSchema();

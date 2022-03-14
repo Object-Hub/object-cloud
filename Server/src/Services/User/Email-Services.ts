@@ -36,7 +36,7 @@ class EmailService {
       { expiresIn: '15m' },
     );
 
-    await data.updateOne({ $set: { verifyEmail: false } });
+    await data.updateOne({ $set: { email: newEmail, verifyEmail: false } });
     await tokens.updateOne({ _id: data._id }, { $set: { token, expireAt: expireToken } }, { upsert: true });
 
     await ConfirmationChangeEmail({ id: data._id, email: data.email, name: data.name, token });
