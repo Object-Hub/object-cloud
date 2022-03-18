@@ -12,8 +12,8 @@ export const userSchema = new Schema<IUser>({
   admin: { type: Boolean, default: false },
   panels: Array,
   UserDiscord: {
-    id: { type: Number, unique: true },
-    tag: { type: String, unique: true },
-    avatar: { type: String, unique: true },
+    id: Number,
+    tag: String,
+    avatar: String,
   },
 });

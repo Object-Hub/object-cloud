@@ -70,3 +70,54 @@
     }
   }
 }
+
+.Warn {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 0;
+  background-color: #ff0000;
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Sucess {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 0;
+  background-color: #00ff00;
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Load {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 0;
+  background-color: #ff9100;
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import ms from 'ms';
 
 import { sendEmailForgotPassword } from '../../Utils/Email/Sendings/ForgotPassword-Email';
-import { IPasswordRequest, IForgotPassword, IUserToken } from '../../Interfaces/Auth';
+import { IPasswordRequest, IUserToken } from '../../Interfaces/Auth';
 import { DataBase } from '../../Database';
 
 const { users, tokens } = DataBase;
@@ -30,7 +29,7 @@ class PasswordService {
     };
   }
 
-  async forgotPassword({ email }: IForgotPassword) {
+  async forgotPassword(email: string) {
     const data = await users.findOne({ email, verifyEmail: true });
     if (!data) throw new Error('Usuário inválido ou email não verificado.');
 
@@ -39,19 +38,16 @@ class PasswordService {
         id: data._id,
         email: data.email,
       },
-      'secret',
+      'ForgotPasswordToken',
       { expiresIn: '15m' },
     );
 
-    const expireToken = ms('15m') + Date.now();
     const dataEmail = await sendEmailForgotPassword({
       id: data._id,
       name: data.name,
       email: data.email,
       token,
     });
-
-    await tokens.updateOne({ _id: data._id }, { token, expireAt: expireToken }, { upsert: true });
 
     return {
       message: 'Email enviado com sucesso.',
@@ -61,15 +57,13 @@ class PasswordService {
 
   async forgotPasswordToken({ id, token, newPassword }: IUserToken) {
     const user = await users.findOne({ _id: id });
-    const data = await tokens.findOne({ _id: id, token });
+    const verifyToken = jwt.verify(token, 'ForgotPasswordToken');
 
     if (!user) throw new Error('Usuário inválido.');
-    if (!data) throw new Error('Token inválido.');
+    if (!verifyToken) throw new Error('Token inválido.');
 
     const newPasswordHash = bcrypt.hashSync(newPassword, 10);
-
     await users.updateOne({ _id: user._id }, { password: newPasswordHash });
-    await tokens.updateOne({ _id: user._id }, { token: null, expireAt: null });
 
     return {
       message: `Senha alterada com sucesso.\nRedirecionando você para pagina de Login.`,

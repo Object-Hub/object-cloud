@@ -25,4 +25,10 @@ routes.use('/server', ServerRoutes);
 routes.get('/account');
 routes.use('/account', UserRoutes);
 
+console.log('[SYSTEM]: Rota: Account Carregada.');
+console.log('[SYSTEM]: Rota: Admin Carregada.');
+console.log('[SYSTEM]: Rota: Server Carregada.');
+
+setTimeout(() => console.log('[SYSTEM]: Todas as rotas carregadas com sucesso.'), 500);
+
 export default routes;

@@ -5,11 +5,6 @@ export interface IPasswordRequest {
   newPassword: string;
 }
 
-export interface IForgotPassword {
-  email: string;
-  newPassword?: string;
-}
-
 export interface IUserToken {
   id: string;
   token: string;

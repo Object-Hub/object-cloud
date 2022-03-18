@@ -1,13 +1,12 @@
 import { v4 as Uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import ms from 'ms';
 
 import { sendConfirmEmail } from '../../Utils/Email/Sendings/ConfirmationEmail-Email';
 import { IUserRegister, IUserLogin } from '../../Interfaces/User';
 import { DataBase } from '../../Database';
 
-const { users, tokens } = DataBase;
+const { users } = DataBase;
 
 class AuthService {
   async register({ name, username, email, password }: IUserRegister) {
@@ -19,7 +18,6 @@ class AuthService {
     if (data.checkEmail) throw new Error('Já existe um usuário com este email.');
     if (data.checkUsername) throw new Error('Já existe um usuário com este apelido.');
 
-    const expireToken = ms('15m') + Date.now();
     const user = {
       _id: Uuidv4(),
       name,
@@ -47,12 +45,6 @@ class AuthService {
       createdAt: user.createdAt,
     }).save();
 
-    new tokens({
-      _id: user._id,
-      token,
-      expireAt: expireToken,
-    }).save();
-
     await sendConfirmEmail({ id: user._id, email, name, token });
 
     return {
@@ -69,8 +61,6 @@ class AuthService {
     if (!CheckPassword) throw new Error('Senha inválida.');
 
     if (!CheckUsernameOrEmail.verifyEmail) {
-      const expireToken = ms('15m') + Date.now();
-
       const token = jwt.sign(
         {
           id: CheckUsernameOrEmail._id,
@@ -79,8 +69,6 @@ class AuthService {
         'EmailSecretToken',
         { expiresIn: '15m' },
       );
-
-      await tokens.updateOne({ _id: CheckUsernameOrEmail._id }, { token, expireAt: expireToken }, { upsert: true });
 
       await sendConfirmEmail({
         id: CheckUsernameOrEmail._id,
@@ -92,15 +80,7 @@ class AuthService {
       throw new Error('Verifique seu Email antes de efetuar Login.');
     }
 
-    const token = jwt.sign(
-      {
-        name: CheckUsernameOrEmail.name,
-        username: CheckUsernameOrEmail.username,
-        email: CheckUsernameOrEmail.email,
-      },
-      'secret',
-      { expiresIn: '1d' },
-    );
+    const token = jwt.sign({ id: CheckUsernameOrEmail._id }, 'LoginSecToken', { expiresIn: '1d' });
 
     return {
       message: 'Login efetuado.',

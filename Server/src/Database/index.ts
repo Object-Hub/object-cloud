@@ -4,7 +4,6 @@ import { userSchema } from './Models/UsersPanel';
 import { tokenUser } from './Models/TokenUser';
 import { IUser } from './Interfaces/User';
 import { ITokenUser } from './Interfaces/Token';
-import CheckExpireToken from '../Utils/Token/CheckExpireToken';
 
 class Mongoose {
   readonly users: Model<IUser>;
@@ -23,9 +22,8 @@ class Mongoose {
         await this.setUserSchema();
         await this.setTokenSchema();
 
-        await CheckExpireToken();
-
-        console.log('[SYSTEM]: DataBase Conectada com sucesso: ' + db.connection.name);
+        console.log('[SYSTEM]: Banco de dados Conectada com sucesso: ' + db.connection.name);
+        console.log('[SYSTEM]: Models do banco de dados carregados.');
       })
       .catch((e) => {
         const { message } = e as Error;

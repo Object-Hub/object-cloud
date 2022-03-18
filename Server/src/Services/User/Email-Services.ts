@@ -5,16 +5,17 @@ import { DataBase } from '../../Database';
 import { IChangeEmail } from '../../Interfaces/Email';
 import { ConfirmationChangeEmail } from '../../Utils/Email/Sendings/ConfirmationChangeEmail-Email';
 
-const { tokens, users } = DataBase;
+const { users } = DataBase;
 
 class EmailService {
-  async confirmEmail(id: string) {
+  async confirmEmail(id: string, token: string) {
     const user = await users.findOne({ _id: id });
     if (!user) throw new Error('Usuário inválido.');
 
-    await user.updateOne({ $set: { verifyEmail: true } });
-    await tokens.updateOne({ _id: user._id }, { token: null, expireAt: null });
+    const verifyToken = jwt.verify(token, 'EmailSecretToken');
+    if (!verifyToken) throw new Error('Token Inválido.');
 
+    await user.updateOne({ $set: { verifyEmail: true } });
     return {
       message: 'Email verificado com sucesso.',
     };
@@ -25,6 +26,8 @@ class EmailService {
 
     const data = await users.findOne({ username });
     if (!data) throw new Error('Usuário não existe.');
+
+    if (data.email === newEmail) throw new Error('O novo email não pode ser igual ao antigo.');
 
     const expireToken = ms('15m') + Date.now();
     const token = jwt.sign(
@@ -37,9 +40,7 @@ class EmailService {
     );
 
     await data.updateOne({ $set: { email: newEmail, verifyEmail: false } });
-    await tokens.updateOne({ _id: data._id }, { $set: { token, expireAt: expireToken } }, { upsert: true });
-
-    await ConfirmationChangeEmail({ id: data._id, email: data.email, name: data.name, token });
+    await ConfirmationChangeEmail({ id: data._id, email: newEmail, name: data.name, token });
 
     return {
       message: 'Para confirmar alteração verifique seu endereço de email.',

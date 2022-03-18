@@ -9,14 +9,14 @@ const UserRoutes = Router();
 
 UserRoutes.post('/login', authController.login);
 UserRoutes.post('/register', authController.register);
-UserRoutes.get('/profile', ensureAuth, authController.profile); // teste de middleware
+UserRoutes.get('/profile', ensureAuth, authController.profile);
 
 UserRoutes.post('/forgot-password', passwordController.forgotPassword);
-UserRoutes.post('/change-password/:username', passwordController.changePassword);
+UserRoutes.post('/change-password/:username', ensureAuth, passwordController.changePassword);
 UserRoutes.post('/forgot-password/:id/:token', passwordController.forgotPasswordToken);
 
 UserRoutes.get('/confirm-email/:id/:token', emailController.confirmEmail);
-UserRoutes.post('/change-email/:username', emailController.changeEmail);
+UserRoutes.post('/change-email/:username', ensureAuth, emailController.changeEmail);
 UserRoutes.get('/change-email/:id/:token', emailController.changeEmailToken);
 
 export default UserRoutes;

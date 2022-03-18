@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 
 import { passwordService } from '../../Services/User/Password-Services';
 import { IPasswordRequest } from '../../Interfaces/Auth';
@@ -11,9 +10,13 @@ class PasswordController {
 
     try {
       const data = await passwordService.changePassword({ username, oldPassword, newPassword });
+
+      console.log('[SYSTEM]: Senha alterada.');
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
+
+      console.error('[SYSTEM]: Ocorreu um erro: ' + message);
       return res.status(400).json({
         error: message,
       });
@@ -29,10 +32,14 @@ class PasswordController {
       });
 
     try {
-      const data = await passwordService.forgotPassword({ email });
+      const data = await passwordService.forgotPassword(email);
+
+      console.log('[SYSTEM]: Email de recuperação de senha enviado.');
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
+
+      console.error('[SYSTEM]: Ocorreu um erro: ' + message);
       return res.status(400).json({
         error: message,
       });
@@ -51,14 +58,15 @@ class PasswordController {
       });
 
     try {
-      const verifyToken = jwt.verify(token, 'secret');
-      if (!verifyToken) return res.status(404);
-
       const data = await passwordService.forgotPasswordToken({ id, token, newPassword });
+
+      console.log('[SYSTEM]: Senha recuperada.');
       return res.status(200).json(data);
     } catch (error) {
       const { message } = error as Error;
-      return res.status(400).json({
+
+      console.error('[SYSTEM]: Ocorreu um erro: ' + message);
+      return res.status(404).json({
         error: message,
       });
     }

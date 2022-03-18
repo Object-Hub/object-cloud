@@ -1,13 +1,7 @@
 import { transporter } from '../Transporter';
+import { IEmailRequest } from '../../../Interfaces/Email';
 
-interface EmailRequest {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
-}
-
-export const sendEmailForgotPassword = async ({ id, name, email, token }: EmailRequest) => {
+export const sendEmailForgotPassword = async ({ id, name, email, token }: IEmailRequest) => {
   const messageToEmail = await transporter.sendMail({
     from: `"Control Panel Brasil" <controlpanelBR@gmail.com>`,
     to: email,

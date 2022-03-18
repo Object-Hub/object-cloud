@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
       password,
     });
 
-    const { token, user } = response.data
+    const { token, user } = response.data;
 
     localStorage.setItem('@ControlPanel', token);
     api.defaults.headers.common.authorization = `Bearer ${token}`
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
     
 
   const signOut = () => {
-
+    
   }
 
   return (

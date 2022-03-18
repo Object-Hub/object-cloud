@@ -1,9 +1,12 @@
 {
-  "name": "client-control-panel",
-  "private": true,
+  "name": "control-panel",
+  "description": "A Front of Simple Panel",
+  "main": "build/index.jsx",
+  "license": "MIT",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "start": "node .",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -11,6 +14,7 @@
     "axios": "^0.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.28.0",
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
