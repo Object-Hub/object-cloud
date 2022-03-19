@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { IoMdLogIn } from 'react-icons/io'
 
 import { AuthContext } from '../../contexts/Auth/AuthContext'
 import styles from './styles.module.scss'
@@ -96,7 +97,7 @@ export function LoginForm() {
 					name="password" 
 					onChange={e => setPassword(e.target.value)}/>
 			</label>
-        <button type="submit">Entrar</button>
+        <button type="submit"><IoMdLogIn size ="18"/> Entrar</button>
         <div className={styles.Register}>
           <a href="/register">Criar uma nova conta</a>{` | `}<a href="/forgot-password">Esqueci a senha</a>
         </div>
