@@ -25,11 +25,10 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-
       <GlobalStyle/>
-      <Header toggleTheme={toggleTheme}/>
-
+    
       <Router>
+        <Header toggleTheme={toggleTheme}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

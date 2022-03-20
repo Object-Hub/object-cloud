@@ -12,6 +12,6 @@ export default createGlobalStyle`
     font-size: 14px;
     color: ${props => props.theme.colors.text};
     font-family: Roboto, sans-serif;
-    transition: all 0.20s ease;
+    transition: all 0.20s linear;
   }
 `;
