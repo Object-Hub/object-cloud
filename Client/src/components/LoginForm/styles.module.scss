@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+  height: 75vh;
 }
 
 .Form {
@@ -48,18 +48,19 @@
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
-    transition: filter 0.2s linear;
+    transition: background-color 0.2s linear;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover {
-      color: #ffuchsia ;
+      background-color: #2f52b4;
     }
 
     &:focus {
       outline: none;
+      filter: saturate(1.5);
     }
   }
 }
