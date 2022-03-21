@@ -1,20 +1,28 @@
 import styles from 'styled-components';
 
 export const Container = styles.div`
+
+  .navbar-menu-button {
+    text-decoration: none;
+    color: ${props => props.theme.colors.text}
+  }
+  
   .navbar {
     background: ${props => props.theme.colors.primary};
-    height: 45px;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 5px;
-    color: #fff;
+    justify-content: space-between;
+    padding: 0.5rem;
   }
 
   .menu-bars {
-    margin-left: 2rem;
-    font-size: 2rem;
-    background: none;
+    margin-left: 1rem;
+    font-size: 1.6rem;
+  }
+
+  .menu-bars-iconClose {
+    text-align: center !important;
   }
 
   .nav-menu {
@@ -26,21 +34,21 @@ export const Container = styles.div`
     position: fixed;
     top: 0;
     left: -100%;
-    transition: 850ms;
+    transition: 0.30s ease;
+    z-index: 9999;
   }
 
   .nav-menu.active {
     left: 0;
-    transition: 350ms;
+    transition: 0.30s ease;
   }
 
   .nav-text {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    padding: 8px 0px 8px 16px;
     list-style: none;
-    height: 60px;
+    height: 4.5rem;
   }
 
   .nav-text a {
@@ -52,6 +60,8 @@ export const Container = styles.div`
     display: flex;
     padding: 0 16px;
     border-radius: 4px;
+    align-items: center;
+    transition: background 0.30s ease;
   }
 
   .nav-text a:hover {
@@ -61,6 +71,7 @@ export const Container = styles.div`
   .nav-menu-items {
     width: 100%;
   }
+
 
   .navbar-toggle {
     background: ${props => props.theme.colors.primary}
@@ -73,5 +84,17 @@ export const Container = styles.div`
 
   span {
     margin-left: 16px;
+  }
+
+  .Switch {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .SwitchStyle {
+    display: flex;
+
+    padding: 0.5rem;
+
+    background: ${props => props.theme.colors.background}
   }
 `;

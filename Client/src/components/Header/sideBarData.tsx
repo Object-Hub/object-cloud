@@ -15,5 +15,17 @@ export const SideBarData: Array<IData> = [
     path: '/dashboard',
     icon: <MdSpaceDashboard />,
     cName: 'nav-text'
+  },
+  {
+    title: 'Dashboard',
+    path: '/dashboard',
+    icon: <MdSpaceDashboard />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Dashboard',
+    path: '/dashboard',
+    icon: <MdSpaceDashboard />,
+    cName: 'nav-text'
   }
 ]
