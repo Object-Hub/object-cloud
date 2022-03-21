@@ -15,6 +15,7 @@ import light from './styles/themes/light';
 import GlobalStyle from './styles/global';
 import Header from './components/Header';
 import usePersistedState from "./utils/usePersistedState";
+import { Footer } from "./components/Footer";
 
 export function App() {
   const [theme, setTheme] = usePersistedState<DefaultTheme>('@theme', light);
@@ -38,7 +39,7 @@ export function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-
+      <Footer />
     </ThemeProvider>
   );
 }
