@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoMdLogIn } from 'react-icons/io'
 
-import { AuthContext } from '../../contexts/Auth/AuthContext'
-import styles from './styles.module.scss'
+import { AuthContext } from '../../../contexts/Auth/AuthContext'
+import Container from './styles';
 
 interface IMessage {
   data?: string;
@@ -67,41 +67,42 @@ export function LoginForm() {
   }
 
 	return (
-		<div className={styles.Container}>
-			<form onSubmit={handleSubmit} className={styles.Form}>
-				<>{message.warn ?
-					<label> 
-						<div className={
-							message.type === 'sucess' ? styles.Sucess :
-							message.type === 'error' ? styles.Warn :
-							styles.Load
-						}> {message.data}
-						</div>
-					<br />
-					</label>
-			: null }</>
-			<label>
-				Usuário:
-				<input 
-					placeholder='Digite seu nome de usuário ou e-mail'
-					type="text" 
-					name="username"
-					onChange={e => setLogin(e.target.value)} />
-			</label>
-			<br />
-			<label>
-			Senha:
-				<input 
-					placeholder='Digite sua senha'
-					type="password" 
-					name="password" 
-					onChange={e => setPassword(e.target.value)}/>
-			</label>
-        <button type="submit"><IoMdLogIn size ="18"/> Entrar</button>
-        <div className={styles.Register}>
-          <a href="/register">Criar uma nova conta</a>{` | `}<a href="/forgot-password">Esqueci a senha</a>
-        </div>
-			</form>
-		</div>
+		<Container>
+			<div>
+				<form onSubmit={handleSubmit} className='Form'>
+					<>{message.warn ?
+						<label> 
+							<div className={
+								message.type === 'sucess' ? 'Sucess' :
+								message.type === 'error' ? 'Warn' : 'Load'
+							}> {message.data}
+							</div>
+						<br />
+						</label>
+				: null }</>
+				<label>
+					Usuário:
+					<input 
+						placeholder='Digite seu nome de usuário ou e-mail'
+						type="text" 
+						name="username"
+						onChange={e => setLogin(e.target.value)} />
+				</label>
+				<br />
+				<label>
+				Senha:
+					<input 
+						placeholder='Digite sua senha'
+						type="password" 
+						name="password" 
+						onChange={e => setPassword(e.target.value)}/>
+				</label>
+					<button type="submit"><IoMdLogIn size ="18"/> Entrar</button>
+					<div className='Register'>
+						<a href="/register">Criar uma nova conta</a>{` | `}<a href="/forgot-password">Esqueci a senha</a>
+					</div>
+				</form>
+			</div>
+		</Container>
 	)
 }

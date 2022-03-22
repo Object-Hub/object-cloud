@@ -2,7 +2,6 @@ const Moon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
-    color="black"
     style={{ height: '15px', marginTop: '2px', marginLeft: '2px'}}
   >
     <path
@@ -15,7 +14,6 @@ const Sun = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
-    color="black"
     style={{ height: '15px', marginTop: '2px', marginLeft: '2px' }}
   >
     <path

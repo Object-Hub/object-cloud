@@ -33,12 +33,12 @@ export default function Header({ toggleTheme }: Props) {
         </Link>
 
         <Link to='/' className='navbar-menu-button'>
-          <h1>Control Panel</h1>
+          <h1>Object Panel</h1>
         </Link>
         
         <div>
-          <MdAccountCircle style={{ width: '45', height: '30' }} />
-          <HiOutlineLogout style={{ width: '45', height: '30' }} />
+          <MdAccountCircle style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
+          <HiOutlineLogout style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
         </div>
       </div>
   
@@ -63,7 +63,7 @@ export default function Header({ toggleTheme }: Props) {
             );
           })}
           <li className='nav-text'>
-            <div className='SwitchStyle'>
+            <div className='Switch-bg'>
             <Sun />
               <Switch className='Switch'
                 onChange={toggleTheme}

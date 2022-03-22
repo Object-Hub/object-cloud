@@ -1,4 +1,5 @@
 import styles from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styles.div`
 
@@ -34,13 +35,13 @@ export const Container = styles.div`
     position: fixed;
     top: 0;
     left: -100%;
-    transition: 0.30s ease;
+    transition: left 0.55s;
     z-index: 9999;
   }
 
   .nav-menu.active {
     left: 0;
-    transition: 0.30s ease;
+    transition: left 0.55s;
   }
 
   .nav-text {
@@ -56,16 +57,17 @@ export const Container = styles.div`
     color: ${props => props.theme.colors.text};
     font-size: 18px;
     width: 95%;
-    height: 100%;
+    height: 85%;
     display: flex;
     padding: 0 16px;
-    border-radius: 4px;
+    border-radius: 15px;
     align-items: center;
     transition: background 0.30s ease;
   }
 
   .nav-text a:hover {
-    background: ${props => props.theme.colors.secundary}
+    color: #fff;
+    background: ${props => shade(0.2, props.theme.colors.secundary)}
   }
 
   .nav-menu-items {
@@ -90,11 +92,12 @@ export const Container = styles.div`
     margin-left: 0.5rem;
     margin-right: 0.5rem;
   }
-  .SwitchStyle {
+
+  .Switch-bg {
     display: flex;
 
     padding: 0.5rem;
-
-    background: ${props => props.theme.colors.background}
+    border-radius: 25rem;
+    background: ${props => props.theme.colors.background};  
   }
-`;
+`;  
