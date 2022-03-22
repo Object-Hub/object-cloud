@@ -13,9 +13,9 @@ import dark from './styles/themes/dark';
 import light from './styles/themes/light';
 
 import GlobalStyle from './styles/global';
-import Header from './components/Header';
+import Header from './components/Global/Header';
 import usePersistedState from "./utils/usePersistedState";
-import { Footer } from "./components/Footer";
+import { Footer } from "./components/Global/Footer";
 
 export function App() {
   const [theme, setTheme] = usePersistedState<DefaultTheme>('@theme', light);
@@ -27,7 +27,6 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle/>
-    
       <Router>
         <Header toggleTheme={toggleTheme}/>
         <Routes>
