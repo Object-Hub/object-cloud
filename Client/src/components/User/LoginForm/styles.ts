@@ -12,7 +12,7 @@ export default styled.div`
     padding: 20px;
     border-radius: 5px;
     color: #fff;
-    background-color: ${props => props.theme.colors.primary};
+    background-color: ${p => p.theme.colors.primary};
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     > label {
@@ -45,18 +45,19 @@ export default styled.div`
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       border: 0;
-      background-color: #1961d4;
+      background-color: ${p => p.theme.colors.secundary};
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.2s linear;
+      transition: background-color 0.2s;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
       &:hover {
-        background-color: #2f52b4;
+        color: #000;
+        background-color: #fff;
       }
 
       &:focus {
@@ -75,7 +76,7 @@ export default styled.div`
     }
 
     > a {
-      color: #00a8ff;
+      color: #fff;
       text-decoration: none;
       
       &:hover {

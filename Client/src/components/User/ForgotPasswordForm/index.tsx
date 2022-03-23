@@ -3,6 +3,8 @@ import { useState } from "react";
 import Container from './styles';
 import api from "../../../services/api";
 
+const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)*$/i;
+
 interface IMessage {
   data?: string;
   type?: string;
@@ -19,19 +21,13 @@ export function ForgotPasswordForm() {
 
     if (!email) return setMessage({
       data: 'Você não inseriu um email.',
-      type: 'error',
-      warn: true
-    });
-
-    if (!email.includes("@")) return setMessage({
-      data: 'Email inválido.',
-      type: 'error',
+      type: 'Warn',
       warn: true
     });
 
     setMessage({
       data: 'Enviando de recuperação...',
-      type: 'load',
+      type: 'Load',
       warn: true
     });
 
@@ -40,7 +36,7 @@ export function ForgotPasswordForm() {
     }).then((response) => {
       setMessage({
         data: response.data.message,
-        type: 'sucess',
+        type: 'Sucess',
         warn: true
       });
     }).catch((err) => {
@@ -49,9 +45,9 @@ export function ForgotPasswordForm() {
 
       setMessage({
         data: error,
-        type: 'error',
+        type: 'Warn',
         warn: true
-      })
+      });
     });
   }
 
@@ -61,13 +57,10 @@ export function ForgotPasswordForm() {
         <form onSubmit={handleSubmit} className='Form'>
           <>{message.warn ?
             <label>
-              <div className=
-                {
-                  message.type == 'sucess' ? 'Sucess' : 
-                  message.type == 'error' ? 'Warn' : 'Load'
-                }> {message.data}
+              <div className={message.type}>
+                {message.data}
               </div>
-              <br />
+              <br/>
             </label>
           : null }</>
           <label>
@@ -77,8 +70,15 @@ export function ForgotPasswordForm() {
               type="text"
               name="email"
               onChange={e => {
-                setMessage({ warn: false });
                 setEmail(e.target.value);
+
+                if (e.target.value && !regex.test(e.target.value)) return setMessage({
+                  data: 'Email inválido.',
+                  type: 'Warn',
+                  warn: true
+                });
+
+                setMessage({ warn: false });               
               }} />
           </label>
           <br />

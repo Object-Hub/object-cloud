@@ -9,9 +9,10 @@ import { useState, useContext } from 'react';
 import Switch from 'react-switch';
 import { shade } from 'polished';
 
-import { Container } from './styles';
+import Container from './styles';
 import { Moon, Sun } from './icons';
 import { SideBarData } from './sideBarData';
+
 interface Props {
   toggleTheme(): void
 }

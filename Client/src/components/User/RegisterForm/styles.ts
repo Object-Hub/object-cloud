@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export default styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 85vh;
 
   .Form {
     width: 100%;
@@ -17,15 +17,16 @@ export default styled.div`
 
     > label {
       display: block;
+      margin-bottom: 0.3rem;
 
       > input {
+        margin-top: 0.3rem;
         width: 100%;
         padding: 0.5rem;
-        border: 1px solid #000;
+        border: 1px solid #ccc;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         border: 0;
-        margin-top: 1rem;
 
         &::placeholder {
           color: #000;
@@ -38,7 +39,7 @@ export default styled.div`
     }
 
     > button {
-      margin-bottom: 0.7rem;
+      margin-top: 1rem;
       width: 100%;
       padding: 0.5rem;
       border: 1px solid #ccc;
@@ -49,20 +50,21 @@ export default styled.div`
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.2s;
 
       &:hover {
         color: #000;
-        background-color:#fff;
+        background-color: #fff;
       }
 
       &:focus {
         outline: none;
+        filter: saturate(1.5);
       }
     }
   }
 
-  .Forgot {
+  .Register {
+    margin-top: 1rem;
     text-align: center;
 
     &:focus {
@@ -70,9 +72,10 @@ export default styled.div`
     }
 
     > a {
-      color: #fff;
+      color: #00a8ff;
       text-decoration: none;
       
+
       &:hover {
         text-decoration: underline;
       }
@@ -129,5 +132,4 @@ export default styled.div`
       outline: none;
     }
   }
-
 `;

@@ -1,13 +1,12 @@
 import styles from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styles.div`
-
+export default styles.div`
   .navbar-menu-button {
     text-decoration: none;
     color: ${props => props.theme.colors.text}
   }
-  
+
   .navbar {
     background: ${props => props.theme.colors.primary};
     height: 100%;
@@ -67,7 +66,7 @@ export const Container = styles.div`
 
   .nav-text a:hover {
     color: #fff;
-    background: ${props => shade(0.2, props.theme.colors.secundary)}
+    background: ${p => p.theme.colors.tertiary}
   }
 
   .nav-menu-items {

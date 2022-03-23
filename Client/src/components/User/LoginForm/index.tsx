@@ -1,102 +1,64 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoMdLogIn } from 'react-icons/io'
 
-import { AuthContext } from '../../../contexts/Auth/AuthContext'
+import { AuthContext } from '../../../contexts/Auth/AuthContext';
 import Container from './styles';
-
-interface IMessage {
-  data?: string;
-  type?: string;
-  warn: boolean;
-}
 
 export function LoginForm() {
 
-  const [ Login, setLogin ] = useState('')
-  const [ password, setPassword ] = useState('')
-	const [ message, setMessage ] = useState({ warn: false } as IMessage)
-  const { signIn } = useContext(AuthContext)
+	const [ MessageError, setMessageError ] = useState('');
+	const [ MessageSucess, setMessageSucess ] = useState('');
+
+  const [ Login, setLogin ] = useState('');
+  const [ LoginError, setLoginError] = useState('');
+
+  const [ password, setPassword ] = useState('');
+  const [ PasswordError, setPasswordError] = useState('');
+
+  const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-    e.preventDefault()
-
-    if(!Login) {
-			setMessage({
-				data: 'Você precisa digitar seu usuário.',
-				type: 'error',
-				warn: true
-			});
-
-			return setTimeout(() => setMessage({ warn: false }), 2000);
-		}
-
-		if (!password) {
-			setMessage({
-				data: 'Você precisa digitar sua senha.',
-				type: 'error',
-				warn: true
-			});
-			
-			return setTimeout(() => setMessage({ warn: false }), 2000);
-		}
-
-		setMessage({
-			data: 'Logando...',
-			type: 'load',
-			warn: true
-		});
+    e.preventDefault();
     
 		signIn(Login, password).then((response) => {
-			setMessage({
-				data: 'Logado com sucesso.',
-				type: 'sucess',
-				warn: true
-			});
+			navigate('/');
 
-			navigate('/')
+			const { message } = response.data
+			setMessageSucess(message);
+			setMessageSucess('Login realizado com sucesso!');
 		}).catch((err) => {
 			const { error } = err.response.data;
-			setMessage({
-				data: error,
-				type: 'error',
-				warn: true
-			});
+			setMessageError(error);
 		});
+
   }
 
 	return (
 		<Container>
 			<div>
+				{MessageError ? '' : null }
 				<form onSubmit={handleSubmit} className='Form'>
-					<>{message.warn ?
-						<label> 
-							<div className={
-								message.type === 'sucess' ? 'Sucess' :
-								message.type === 'error' ? 'Warn' : 'Load'
-							}> {message.data}
-							</div>
-						<br />
-						</label>
-				: null }</>
 				<label>
 					Usuário:
 					<input 
 						placeholder='Digite seu nome de usuário ou e-mail'
 						type="text" 
 						name="username"
-						onChange={e => setLogin(e.target.value)} />
+						onChange={e => {setLogin(e.target.value);}} />
 				</label>
-				<br />
+				<span>{LoginError && <div className='Warn' >{LoginError}</div>}</span>
+				<br/>
 				<label>
 				Senha:
 					<input 
 						placeholder='Digite sua senha'
 						type="password" 
 						name="password" 
-						onChange={e => setPassword(e.target.value)}/>
+						onChange={(e) => setPassword(e.target.value) } />
 				</label>
+				{PasswordError && <div className='Warn' >{PasswordError}</div> }
 					<button type="submit"><IoMdLogIn size ="18"/> Entrar</button>
 					<div className='Register'>
 						<a href="/register">Criar uma nova conta</a>{` | `}<a href="/forgot-password">Esqueci a senha</a>
