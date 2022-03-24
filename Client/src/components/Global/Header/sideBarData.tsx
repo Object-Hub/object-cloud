@@ -1,10 +1,7 @@
 import React from 'react';
 import icons from 'react-icons';
 
-import { MdSpaceDashboard,
-  MdAdminPanelSettings,
-  MdOutlineDesktopWindows
-} from 'react-icons/md';
+import * as Icon from 'react-icons/all';
 
 interface IData {
   title: string;
@@ -17,19 +14,19 @@ export const SideBarData: Array<IData> = [
   {
     title: 'Dashboard',
     path: '/dashboard',
-    icon: <MdSpaceDashboard />,
+    icon: <Icon.MdSpaceDashboard />,
     cName: 'nav-text'
   },
   {
     title: 'Adminstração',
     path: '/admin',
-    icon: <MdAdminPanelSettings />,
+    icon: <Icon.MdAdminPanelSettings />,
     cName: 'nav-text'
   },
   {
     title: 'VPS',
     path: '/vps',
-    icon: <MdOutlineDesktopWindows />,
+    icon: <Icon.MdOutlineDesktopWindows />,
     cName: 'nav-text'
   }
 ]
