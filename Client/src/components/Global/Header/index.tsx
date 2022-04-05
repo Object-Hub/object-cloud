@@ -1,10 +1,7 @@
 
 import { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ImMenu } from 'react-icons/im';
-import { AiOutlineClose } from 'react-icons/ai';
-import { MdAccountCircle } from 'react-icons/md';
-import { HiOutlineLogout } from 'react-icons/hi';
+import * as Icons from 'react-icons/all';
 import { useState, useContext } from 'react';
 import Switch from 'react-switch';
 import { shade } from 'polished';
@@ -27,7 +24,7 @@ export default function Header({ toggleTheme }: Props) {
     <Container>
       <div className='navbar'>
         <Link to='#' className='menu-bars'>
-          <ImMenu
+          <Icons.ImMenu
             className='navbar-menu-button'
             onClick={showSideBar}
           />
@@ -38,8 +35,8 @@ export default function Header({ toggleTheme }: Props) {
         </Link>
         
         <div>
-          <MdAccountCircle style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
-          <HiOutlineLogout style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
+          <Icons.MdAccountCircle style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
+          <Icons.HiOutlineLogout style={{ cursor: 'pointer', width: '45', height: '30' }} onClick={() => {}} />
         </div>
       </div>
   
@@ -47,7 +44,7 @@ export default function Header({ toggleTheme }: Props) {
         <ul className='nav-menu-items'>          
           <li className='navbar-toggle'>
             <Link to='#' className='menu-bars'>
-              <AiOutlineClose
+              <Icons.AiOutlineClose
                 className='navbar-menu-button'
                 onClick={showSideBar}
               />
@@ -77,7 +74,7 @@ export default function Header({ toggleTheme }: Props) {
                 offColor={shade(0.15, colors.primary)}
                 onColor={colors.secundary}
               />
-              <Moon />
+            <Moon />
             </div>
           </li>
         </ul>
