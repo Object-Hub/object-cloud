@@ -25,8 +25,6 @@ export function LoginForm() {
 		signIn(Login, password).then((response) => {
 			navigate('/');
 
-			const { message } = response.data
-			setMessageSucess(message);
 			setMessageSucess('Login realizado com sucesso!');
 		}).catch((err) => {
 			const { error } = err.response.data;
